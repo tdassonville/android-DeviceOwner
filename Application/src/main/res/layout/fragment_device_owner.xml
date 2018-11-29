@@ -34,6 +34,16 @@
             android:textAppearance="?android:attr/textAppearanceLarge"/>
 
         <Switch
+            android:id="@+id/switch_blockMtp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_medium"
+            android:paddingEnd="@dimen/margin_medium"
+            android:paddingStart="@dimen/margin_medium"
+            android:text="@string/label_block_mtp"
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+        <Switch
             android:id="@+id/switch_auto_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

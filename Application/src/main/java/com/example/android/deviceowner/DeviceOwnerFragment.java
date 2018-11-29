@@ -57,6 +57,7 @@ public class DeviceOwnerFragment extends Fragment {
     private DevicePolicyManager mDevicePolicyManager;
 
     // View references
+    private Switch mBlockMtp;
     private Switch mSwitchAutoTime;
     private Switch mSwitchAutoTimeZone;
     private Spinner mAvailableLaunchers;
@@ -81,6 +82,13 @@ public class DeviceOwnerFragment extends Fragment {
                 case R.id.switch_auto_time_zone:
                     setBooleanGlobalSetting(Settings.Global.AUTO_TIME_ZONE, isChecked);
                     retrieveCurrentSettings(getActivity());
+                    break;
+                case R.id.switch_blockMtp:
+                    if (isChecked) {
+                        mDevicePolicyManager.addUserRestriction(DeviceOwnerReceiver.getComponentName(getActivity()), "no_usb_file_transfer");
+                    } else {
+                        mDevicePolicyManager.clearUserRestriction(DeviceOwnerReceiver.getComponentName(getActivity()), "no_usb_file_transfer");
+                    }
                     break;
             }
         }
@@ -126,11 +134,13 @@ public class DeviceOwnerFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         // Retain references
+        mBlockMtp = (Switch) view.findViewById(R.id.switch_blockMtp);
         mSwitchAutoTime = (Switch) view.findViewById(R.id.switch_auto_time);
         mSwitchAutoTimeZone = (Switch) view.findViewById(R.id.switch_auto_time_zone);
         mAvailableLaunchers = (Spinner) view.findViewById(R.id.available_launchers);
         mButtonLauncher = (Button) view.findViewById(R.id.set_preferred_launcher);
         // Bind event handlers
+        mBlockMtp.setOnCheckedChangeListener(mOnCheckedChangeListener);
         mSwitchAutoTime.setOnCheckedChangeListener(mOnCheckedChangeListener);
         mSwitchAutoTimeZone.setOnCheckedChangeListener(mOnCheckedChangeListener);
         mButtonLauncher.setOnClickListener(mOnClickListener);

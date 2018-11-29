@@ -30,5 +30,6 @@
     <string name="label_launcher">Home Launcher</string>
     <string name="set_as_preferred">Set as preferred</string>
     <string name="clear_preferred">Clear preferred</string>
+    <string name="label_block_mtp">Block USB File Transfer (MTP)</string>
 
 </resources>
