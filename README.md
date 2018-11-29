@@ -1,3 +1,32 @@
+DEMO OF LENOVO TB3-850M CRASH WHEN BLOCKING MTP_USB
+===================================
+
+Introduction
+------------
+
+A simple app to reproduce the boot-loop issue on Lenovo TB3-850M (build TB3-850M_S100036_171214_ROW) when the DevicePolicyManager enforces [DevicePolicyManager.addUserRestriction(admin, "no_usb_file_transfer")](https://developer.android.com/reference/android/app/admin/DevicePolicyManager#addUserRestriction(android.content.ComponentName,%20java.lang.String)) to prevent MTP file transfer usage.
+
+Calling DevicePolicyManager.addUserRestriction(admin, "no_usb_file_transfer") actually stops the MTP feature on the device, but after that point whenever the device is shutdown it will not restart (boot-loop). 
+A hard reset (POWER+ Vol-Down, then option "eMMC") of the tablet brings it back to life.
+
+How to use
+------------
+
+* Build the app (or use the [APK provided here](apk/demo.apk))
+* Install on the target tablet. The tablet MUST BE WITHOUT ANY ACCOUNT INSTALLED, so the app can be set as DeviceOwner. If there is an account setup on the tablet (Google account for example), just do a factory reset first and install the APK just after.
+* Set the sample app as DeviceOwner using adb:
+```
+adb shell dpm set-device-owner com.example.android.deviceowner/.DeviceOwnerReceiver
+```
+
+* Start the app ("DeviceOwner") and block USB File Transfer:
+<img src="screenshots/2-blockMtp.png" height="400" alt="Screenshot"/> 
+
+* Reboot.
+
+
+
+Based on the sample by Google, with just a few lines added to add the feature "no_usb_file_transfer restriction":
 
 Android DeviceOwner Sample
 ===================================
